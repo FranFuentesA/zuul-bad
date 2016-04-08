@@ -34,23 +34,27 @@ public class Game
      */
     private void createRooms()
     {
-        Room outside, theater, pub, lab, office;
+        Room entrada, oficinas, barracones, prision, almacen, control, armeria;
       
         // create the rooms
-        outside = new Room("outside the main entrance of the university");
-        theater = new Room("in a lecture theater");
-        pub = new Room("in the campus pub");
-        lab = new Room("in a computing lab");
-        office = new Room("in the computing admin office");
-        
+        entrada = new Room("la entrada de la base");
+        oficinas = new Room("la oficina de oficiales");
+        barracones = new Room("los Barracones");
+        prision = new Room("la Prision");
+        almacen = new Room("almacen nuclear");
+        control = new Room("la sala de control");
+        armeria = new Room("la armeria");
         // initialise room exits
-        outside.setExits(null, theater, lab, pub);
-        theater.setExits(null, null, null, outside);
-        pub.setExits(null, outside, null, null);
-        lab.setExits(outside, office, null, null);
-        office.setExits(null, null, null, lab);
+        //norte, este, sur , oeste
+        entrada.setExits(oficinas, null, null, null);
+        oficinas.setExits(almacen, armeria, entrada, barracones);
+        barracones.setExits(null, oficinas, prision, null);
+        prision.setExits(barracones, null, null, null);
+        almacen.setExits(null, control, oficinas, null);
+        control.setExits(null, null, null, almacen);
+        armeria.setExits(null, null, null, oficinas);
 
-        currentRoom = outside;  // start game outside
+        currentRoom = entrada;  // start game outside
     }
 
     /**
@@ -77,12 +81,12 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
-        System.out.println("Type 'help' if you need help.");
+        System.out.println("Bienvenido a Infiltrandose en la base!");
+        System.out.println("Infiltrandose en la base es un juego impresionante");
+        System.out.println("Escribe help si necesitas ayuda");
         System.out.println();
-        System.out.println("You are " + currentRoom.getDescription());
-        System.out.print("Exits: ");
+        System.out.println("Estas en " + currentRoom.getDescription());
+        System.out.print("Salida: ");
         if(currentRoom.northExit != null) {
             System.out.print("north ");
         }
