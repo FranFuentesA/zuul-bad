@@ -1,0 +1,1 @@
+Soy un espia, estoy en una base militar y tengo que encontrar la sala de control para robar los códigos de detonación de 2 bombas nucleares.
