@@ -34,7 +34,7 @@ public class Game
      */
     private void createRooms()
     {
-        Room entrada, oficinas, barracones, prision, almacen, control, armeria;
+        Room entrada, oficinas, barracones, prision, almacen, control, armeria, torre;
 
         // create the rooms
         entrada = new Room("la entrada de la base");
@@ -44,16 +44,18 @@ public class Game
         almacen = new Room("almacen nuclear");
         control = new Room("la sala de control");
         armeria = new Room("la armeria");
+        torre = new Room("la torre");
         // initialise room exits
-        //norte, este, sur , oeste
-        entrada.setExits(oficinas, null, null, null);
-        oficinas.setExits(almacen, armeria, entrada, barracones);
-        barracones.setExits(null, oficinas, prision, null);
-        prision.setExits(barracones, null, null, null);
-        almacen.setExits(null, control, oficinas, null);
-        control.setExits(null, null, null, almacen);
-        armeria.setExits(null, null, null, oficinas);
-
+        //norte, este, sur , oeste, sur este
+        entrada.setExits(oficinas, null, null, null,null);
+        oficinas.setExits(almacen, armeria, entrada, barracones,null);
+        barracones.setExits(null, oficinas, prision, null,null);
+        prision.setExits(barracones, null, null, null,null);
+        almacen.setExits(null, control, oficinas, null,null);
+        control.setExits(null, null, null, almacen,null);
+        armeria.setExits(null, null, null, oficinas,torre);
+        torre.setExits(armeria, null, null, null,null);
+        
         currentRoom = entrada;  // start game outside
     }
 
@@ -161,6 +163,9 @@ public class Game
         if(direction.equals("west")) {
             nextRoom = currentRoom.westExit;
         }
+         if(direction.equals("sureste")) {
+            nextRoom = currentRoom.surEsteExit;
+        }
 
         if (nextRoom == null) {
             System.out.println("No hay puerta, intente ir en otra direccion");
@@ -190,7 +195,7 @@ public class Game
 
     /**
      * 
-     * /
+     * Metodo que muestra por pantalla la informacion de la localizacion
      */
     private void  printLocationInfo() 
     {
@@ -207,6 +212,9 @@ public class Game
         }
         if(currentRoom.westExit != null) {
             System.out.print("west ");
+        }
+        if(currentRoom.surEsteExit != null) {
+            System.out.print("sureste ");
         }
         System.out.println();
     }
