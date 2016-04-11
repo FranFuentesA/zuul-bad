@@ -54,7 +54,7 @@ public class Game
         almacen.setExits(null, control, oficinas, null,null,null);
         control.setExits(null, null, null, almacen,null,null);
         armeria.setExits(null, null, null, oficinas,torre,null);
-        torre.setExits(armeria, null, null, null,null,null);
+        torre.setExits(null, null, null, null,null,armeria);
         
         currentRoom = entrada;  // start game outside
     }
