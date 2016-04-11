@@ -46,15 +46,15 @@ public class Game
         armeria = new Room("la armeria");
         torre = new Room("la torre");
         // initialise room exits
-        //norte, este, sur , oeste, sur este
-        entrada.setExits(oficinas, null, null, null,null);
-        oficinas.setExits(almacen, armeria, entrada, barracones,null);
-        barracones.setExits(null, oficinas, prision, null,null);
-        prision.setExits(barracones, null, null, null,null);
-        almacen.setExits(null, control, oficinas, null,null);
-        control.setExits(null, null, null, almacen,null);
-        armeria.setExits(null, null, null, oficinas,torre);
-        torre.setExits(armeria, null, null, null,null);
+        //norte, este, sur , oeste, sur este noroeste
+        entrada.setExits(oficinas, null, null, null,null,null);
+        oficinas.setExits(almacen, armeria, entrada, barracones,null,null);
+        barracones.setExits(null, oficinas, prision, null,null,null);
+        prision.setExits(barracones, null, null, null,null,null);
+        almacen.setExits(null, control, oficinas, null,null,null);
+        control.setExits(null, null, null, almacen,null,null);
+        armeria.setExits(null, null, null, oficinas,torre,null);
+        torre.setExits(armeria, null, null, null,null,null);
         
         currentRoom = entrada;  // start game outside
     }
