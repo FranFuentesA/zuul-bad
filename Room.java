@@ -46,7 +46,7 @@ public class Room
      */
     public void setExits(String direccion, Room localizacion) 
     {
-       salas.put(direccion,localizacion);
+        salas.put(direccion,localizacion);
     }
 
     /**
@@ -56,12 +56,13 @@ public class Room
     {
         return description;
     }
+
     /**
      *  Metodo que devuelve un objeto tipo Room comparando con la cadena 
      */
     public Room getExit(String direction){
         Room devolver = null;
-        
+
         if(direction.equals("north")){
             devolver = salas.get("north");
         }
@@ -111,4 +112,14 @@ public class Room
 
     }
 
+    /**
+     * Return a long description of this room, of the form:
+     *     You are in the 'name of room'
+     *     Exits: north west southwest
+     * @return A description of the room, including exits.
+     */
+    public String getLongDescription()
+    {
+        return "Tu estas en " + getDescription() + "Salidas: " + getExitString();
+    }
 }
