@@ -139,7 +139,7 @@ public class Game
     {
         System.out.println("Eres un espia, busca la sala de codigos");
         System.out.println();
-        parser.getCommands().showAll();
+        parser.imprimirComados();
     }
 
     /** 

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.*;
 /**
  * Class Room - a room in an adventure game.
  *
@@ -62,25 +63,7 @@ public class Room
      */
     public Room getExit(String direction){
         Room devolver = null;
-
-        if(direction.equals("north")){
-            devolver = salas.get("north");
-        }
-        if(direction.equals("east")){
-            devolver = salas.get("east");
-        }
-        if(direction.equals("south")){
-            devolver = salas.get("south");
-        }
-        if(direction.equals("west")){
-            devolver = salas.get("west");
-        }
-        if(direction.equals("sureste")){
-            devolver = salas.get("sureste");
-        }
-        if(direction.equals("noroeste")){
-            devolver = salas.get("noroeste");
-        }
+        devolver = salas.get(direction);
         return devolver;
     }
 
@@ -89,7 +72,7 @@ public class Room
      */
     public String getExitString()
     {
-        String salida = "Salida ";
+         String salida = "Salida ";
         if(salas.get("north") != null) {
             salida += " north ";
         }
@@ -109,10 +92,9 @@ public class Room
             salida += " noroeste ";
         }
         return salida;
-
     }
 
-    /**
+  /**
      * Return a long description of this room, of the form:
      *     You are in the 'name of room'
      *     Exits: north west southwest
@@ -120,6 +102,6 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "Tu estas en " + getDescription() + "Salidas: " + getExitString();
+        return "Tu estas en " + getDescription() + " Salidas: " + getExitString();
     }
 }
