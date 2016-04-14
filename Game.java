@@ -121,6 +121,9 @@ public class Game
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
+        else if (commandWord.equals("look")) {
+             System.out.println(currentRoom.getLongDescription());
+        }
 
         return wantToQuit;
     }
