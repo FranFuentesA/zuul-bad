@@ -24,6 +24,8 @@ public class Room
     private Room surEsteExit;
     private Room noroEsteExit;
     private HashMap<String, Room> salas;
+    private String descripcionObj;
+    private float kgObj;
 
     /**
      * Create a room described "description". Initially, it has
@@ -31,10 +33,12 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description, String descripcionObj,  float kgObj) 
     {
         this.description = description;
         salas = new HashMap<>();
+        this.descripcionObj = descripcionObj;
+        this.kgObj = kgObj;
     }
 
     /**
@@ -74,12 +78,12 @@ public class Room
     {
         String salida = "Salida ";
         for (String clave : salas.keySet()) {
-           salida += clave + " - ";
+            salida += clave + " - ";
+        }
+        return salida;
     }
-    return salida;
-}
 
-  /**
+    /**
      * Return a long description of this room, of the form:
      *     You are in the 'name of room'
      *     Exits: north west southwest
@@ -88,5 +92,17 @@ public class Room
     public String getLongDescription()
     {
         return "Tu estas en " + getDescription() + " Salidas: " + getExitString();
+    }
+    /**
+     * Metodo que devulve el nombre/descripcion del objeto
+     */
+    public String getDescripcionObjeto(){
+        return descripcionObj;
+    }
+    /**
+     * metodo que devuelve el peso en Kg del objeto
+     */
+    public float getKgObjeto(){
+        return kgObj;
     }
 }

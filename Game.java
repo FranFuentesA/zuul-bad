@@ -37,14 +37,14 @@ public class Game
         Room entrada, oficinas, barracones, prision, almacen, control, armeria, torre;
 
         // create the rooms
-        entrada = new Room("la entrada de la base");
-        oficinas = new Room("la oficina de oficiales");
-        barracones = new Room("los Barracones");
-        prision = new Room("la Prision");
-        almacen = new Room("almacen nuclear");
-        control = new Room("la sala de control");
-        armeria = new Room("la armeria");
-        torre = new Room("la torre");
+        entrada = new Room("la entrada de la base","",0);
+        oficinas = new Room("la oficina de oficiales","",0);
+        barracones = new Room("los Barracones","",0);
+        prision = new Room("la Prision","",0);
+        almacen = new Room("almacen nuclear","",0);
+        control = new Room("la sala de control","Codigos ",0.2f);
+        armeria = new Room("la armeria","",0);
+        torre = new Room("la torre","",0);
         // initialise room exits
         //norte, este, sur , oeste, sur este noroeste
         entrada.setExits("north",oficinas);
@@ -61,7 +61,7 @@ public class Game
         armeria.setExits("west", oficinas);
         armeria.setExits("sureste",torre);
         torre.setExits("noroeste",armeria);
-        
+
         currentRoom = entrada;  // start game outside
     }
 
@@ -122,10 +122,13 @@ public class Game
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")) {
-             System.out.println(currentRoom.getLongDescription());
+            System.out.println(currentRoom.getLongDescription());
+            if(currentRoom.getDescripcionObjeto() != null){
+                System.out.println(currentRoom.getDescripcionObjeto() + "\n"+currentRoom.getKgObjeto()+" Kg");
+            }
         }
         else if(commandWord.equals("eat"))
-         {
+        {
             System.out.println("You have eaten now and you are not hungry any more");
         }
 
@@ -195,6 +198,6 @@ public class Game
      */
     private void  printLocationInfo() 
     {
-       System.out.println(currentRoom.getLongDescription());     
+        System.out.println(currentRoom.getLongDescription());     
     }
 }
