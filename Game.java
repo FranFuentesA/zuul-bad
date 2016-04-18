@@ -19,6 +19,8 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Room habitacionAnterior;
+   private int  contadorDeBack;
 
     /**
      * Create the game and initialise its internal map.
@@ -69,6 +71,7 @@ public class Game
          barracones.addItem(new Item("silenciador",0.5f));
 
         currentRoom = entrada;  // start game outside
+        habitacionAnterior = null;
     }
 
     /**
@@ -135,6 +138,9 @@ public class Game
         {
             System.out.println("You have eaten now and you are not hungry any more");
         }
+         else if (commandWord.equals("back")) {
+            atras();
+        }
 
         return wantToQuit;
     }
@@ -174,6 +180,7 @@ public class Game
             System.out.println("No hay puerta, intente ir en otra direccion");
         }
         else {
+            habitacionAnterior = currentRoom;
             currentRoom = nextRoom;
             printLocationInfo();
             System.out.println();
@@ -204,4 +211,30 @@ public class Game
     {
         System.out.println(currentRoom.getLongDescription());     
     }
+    /**
+     * Metodo que vuelve a la habitacion anterior en la que estuvo el jugador, si se invoca el metodo 2 veces no permite ir para atra
+     */
+     private void atras()
+    {
+        boolean continuar = true;        
+        if (contadorDeBack == 1) {
+            continuar = false;            
+        }
+        if(habitacionAnterior != null && continuar == true)
+         {
+            Room nextRoom = habitacionAnterior;
+            habitacionAnterior = currentRoom;
+            currentRoom = nextRoom;
+            printLocationInfo();
+            System.out.println();
+            contadorDeBack++;
+         }
+         else
+         {
+             System.out.println("Lo siento, no pueder continuar");
+         }
+        
+     }
 }
+
+
