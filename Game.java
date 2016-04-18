@@ -1,3 +1,4 @@
+import java.util.Stack;
 /**
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -19,8 +20,7 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
-    private Room habitacionAnterior;
-   private int  contadorDeBack;
+    private Stack<Room> camino;
 
     /**
      * Create the game and initialise its internal map.
@@ -29,6 +29,7 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        camino = new Stack<>();
     }
 
     /**
@@ -63,15 +64,15 @@ public class Game
         armeria.setExits("west", oficinas);
         armeria.setExits("sureste",torre);
         torre.setExits("noroeste",armeria);
-        
+
         // Ponemos objetos en las salas
-        
-         armeria.addItem(new Item("Pistola", 1.5f));
-         control.addItem(new Item("Codigos", 0.05f));
-         barracones.addItem(new Item("silenciador",0.5f));
+
+        armeria.addItem(new Item("Pistola", 1.5f));
+        control.addItem(new Item("Codigos", 0.05f));
+        barracones.addItem(new Item("silenciador",0.5f));
 
         currentRoom = entrada;  // start game outside
-        habitacionAnterior = null;
+
     }
 
     /**
@@ -125,21 +126,26 @@ public class Game
             printHelp();
         }
         else if (commandWord.equals("go")) {
+            Room lastRoom = currentRoom;
             goRoom(command);
+            if(lastRoom != currentRoom){
+                camino.push(lastRoom);
+            }
         }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")) {
             System.out.println(currentRoom.getLongDescription());
-            
+
         }
         else if(commandWord.equals("eat"))
         {
             System.out.println("You have eaten now and you are not hungry any more");
         }
-         else if (commandWord.equals("back")) {
+        else if (commandWord.equals("back")) {
             atras();
+            System.out.println(currentRoom.getLongDescription());
         }
 
         return wantToQuit;
@@ -180,7 +186,7 @@ public class Game
             System.out.println("No hay puerta, intente ir en otra direccion");
         }
         else {
-            habitacionAnterior = currentRoom;
+
             currentRoom = nextRoom;
             printLocationInfo();
             System.out.println();
@@ -211,30 +217,17 @@ public class Game
     {
         System.out.println(currentRoom.getLongDescription());     
     }
-    /**
-     * Metodo que vuelve a la habitacion anterior en la que estuvo el jugador, si se invoca el metodo 2 veces no permite ir para atra
-     */
-     private void atras()
-    {
-        boolean continuar = true;        
-        if (contadorDeBack == 1) {
-            continuar = false;            
-        }
-        if(habitacionAnterior != null && continuar == true)
-         {
-            Room nextRoom = habitacionAnterior;
-            habitacionAnterior = currentRoom;
-            currentRoom = nextRoom;
-            printLocationInfo();
-            System.out.println();
-            contadorDeBack++;
-         }
-         else
-         {
-             System.out.println("Lo siento, no pueder continuar");
-         }
-        
-     }
-}
 
+    /**
+     * Metodo que vuelve a la habitacion anterior en la que estuvo el jugador
+     */
+    private void atras()
+    {
+        if(!camino.empty()){
+            currentRoom = camino.pop();
+        } else {
+            System.out.println("No puedes ir haca atras");
+        }
+    }
+}
 
