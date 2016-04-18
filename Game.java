@@ -37,14 +37,14 @@ public class Game
         Room entrada, oficinas, barracones, prision, almacen, control, armeria, torre;
 
         // create the rooms
-        entrada = new Room("la entrada de la base","",0);
-        oficinas = new Room("la oficina de oficiales","",0);
-        barracones = new Room("los Barracones","",0);
-        prision = new Room("la Prision","",0);
-        almacen = new Room("almacen nuclear","",0);
-        control = new Room("la sala de control","Codigos ",0.2f);
-        armeria = new Room("la armeria","",0);
-        torre = new Room("la torre","",0);
+        entrada = new Room("la entrada de la base");
+        oficinas = new Room("la oficina de oficiales");
+        barracones = new Room("los Barracones");
+        prision = new Room("la Prision");
+        almacen = new Room("almacen nuclear");
+        control = new Room("la sala de control");
+        armeria = new Room("la armeria");
+        torre = new Room("la torre");
         // initialise room exits
         //norte, este, sur , oeste, sur este noroeste
         entrada.setExits("north",oficinas);
@@ -61,6 +61,12 @@ public class Game
         armeria.setExits("west", oficinas);
         armeria.setExits("sureste",torre);
         torre.setExits("noroeste",armeria);
+        
+        // Ponemos objetos en las salas
+        
+         armeria.addItem(new Item("Pistola", 1.5f));
+         control.addItem(new Item("Codigos", 0.05f));
+         barracones.addItem(new Item("silenciador",0.5f));
 
         currentRoom = entrada;  // start game outside
     }
@@ -123,9 +129,7 @@ public class Game
         }
         else if (commandWord.equals("look")) {
             System.out.println(currentRoom.getLongDescription());
-            if(currentRoom.getDescripcionObjeto() != null){
-                System.out.println(currentRoom.getDescripcionObjeto() + "\n"+currentRoom.getKgObjeto()+" Kg");
-            }
+            
         }
         else if(commandWord.equals("eat"))
         {

@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.ArrayList;
 
 /**
  * Class Room - a room in an adventure game.
@@ -24,8 +25,8 @@ public class Room
     private Room surEsteExit;
     private Room noroEsteExit;
     private HashMap<String, Room> salas;
-    private String descripcionObj;
-    private float kgObj;
+    private ArrayList<Item> objetos;
+   
 
     /**
      * Create a room described "description". Initially, it has
@@ -33,12 +34,11 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description, String descripcionObj,  float kgObj) 
+    public Room(String description) 
     {
         this.description = description;
-        salas = new HashMap<>();
-        this.descripcionObj = descripcionObj;
-        this.kgObj = kgObj;
+        salas = new HashMap<>();  
+        objetos = new ArrayList<>();
     }
 
     /**
@@ -76,7 +76,7 @@ public class Room
      */
     public String getExitString()
     {
-        String salida = "Salida ";
+        String salida = "Salidas ";
         for (String clave : salas.keySet()) {
             salida += clave + " - ";
         }
@@ -91,18 +91,25 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "Tu estas en " + getDescription() + " Salidas: " + getExitString();
+        String devolver = "";
+        devolver = "Estas en " + getDescription() + " "+ getExitString();
+        if(objetos.size()== 0){
+              devolver += "No puedo ver ningun objeto util en la sala";
+         }
+         else{
+              devolver += "En la sala hay: ";
+             for(Item lObjetos : objetos){
+                 devolver += "\n" + lObjetos.getDescripcionObjeto() + " Peso: " + lObjetos.getPesoKg();
+             }
+         }
+         return devolver;
     }
-    /**
-     * Metodo que devulve el nombre/descripcion del objeto
-     */
-    public String getDescripcionObjeto(){
-        return descripcionObj;
-    }
-    /**
-     * metodo que devuelve el peso en Kg del objeto
-     */
-    public float getKgObjeto(){
-        return kgObj;
-    }
+     /**
+      * Metodo que añade objetos a las salas
+      */
+     public void addItem(Item objeto){
+         objetos.add(objeto);
+     }
 }
+    
+
