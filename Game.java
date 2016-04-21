@@ -21,7 +21,9 @@ public class Game
     private Parser parser;
     private Room currentRoom;
     private Stack<Room> camino;
-
+    private Player player;
+    private Room habitacionAnterior;
+    private int  contadorDeBack;
     /**
      * Create the game and initialise its internal map.
      */
@@ -30,6 +32,7 @@ public class Game
         createRooms();
         parser = new Parser();
         camino = new Stack<>();
+        contadorDeBack = 0;
     }
 
     /**
@@ -72,6 +75,8 @@ public class Game
         barracones.addItem(new Item("silenciador",0.5f));
 
         currentRoom = entrada;  // start game outside
+         habitacionAnterior = null;
+         contadorDeBack = 0;
 
     }
 
@@ -144,8 +149,9 @@ public class Game
             System.out.println("You have eaten now and you are not hungry any more");
         }
         else if (commandWord.equals("back")) {
-            atras();
-            System.out.println(currentRoom.getLongDescription());
+            atras();            
+            contadorDeBack = 0;
+            
         }
 
         return wantToQuit;
@@ -186,10 +192,11 @@ public class Game
             System.out.println("No hay puerta, intente ir en otra direccion");
         }
         else {
-
+            habitacionAnterior = currentRoom;
             currentRoom = nextRoom;
             printLocationInfo();
             System.out.println();
+            contadorDeBack++;
         }
     }
 
@@ -222,12 +229,23 @@ public class Game
      * Metodo que vuelve a la habitacion anterior en la que estuvo el jugador
      */
     private void atras()
-    {
-        if(!camino.empty()){
-            currentRoom = camino.pop();
-        } else {
-            System.out.println("No puedes ir haca atras");
-        }
+    {              
+        
+        if(habitacionAnterior != null && contadorDeBack > 0)
+         {
+             Room nextRoom = habitacionAnterior;
+             habitacionAnterior = currentRoom;
+             currentRoom = nextRoom;
+             printLocationInfo();
+             System.out.println();
+             
+         }
+         else
+          {
+              System.out.println("Lo siento, no pueder continuar");              
+          }
+         
+      }
     }
-}
+
 
