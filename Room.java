@@ -110,6 +110,38 @@ public class Room
      public void addItem(Item objeto){
          objetos.add(objeto);
      }
+             
+     /**
+      * Metodo que busca los objetos en la habitacion
+     */
+     public Item buscaObj(String descripcion){
+        int i = 0;
+        boolean encontrado = false;
+        Item item = null;
+        while(i < objetos.size() && !encontrado){
+            if(objetos.get(i).getDescripcionObjeto().equals(descripcion)){
+                 item = objetos.get(i);
+                 encontrado = true;
+            }
+             i++;
+         }
+         return item;
+     }
+    
+     /**
+      * Meotodo que elimina un objeto cuando lo coge un jugador
+      */
+    public void elimnaObj(Item item){
+         int i = 0;
+         boolean encontrado = false;
+         while(i < objetos.size() && !encontrado){
+            if(objetos.get(i).getDescripcionObjeto().equals(item.getDescripcionObjeto())){
+                 objetos.remove(objetos.get(i));
+                 encontrado = true;
+            }
+             i++;
+         }
+    }
 }
     
 
