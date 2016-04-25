@@ -12,27 +12,24 @@ import java.util.Stack;
  *  rooms, creates the parser and starts the game.  It also evaluates and
  *  executes the commands that the parser returns.
  * 
- * @author  Michael KÃ¶lling and David J. Barnes
+ * @author  Michael Kölling and David J. Barnes
  * @version 2011.07.31
  */
 
 public class Game 
 {
     private Parser parser;
+    private Player jugador;
     private Room currentRoom;
-    private Stack<Room> camino;
-    private Player player;
-    private Room habitacionAnterior;
-    private int  contadorDeBack;
     /**
      * Create the game and initialise its internal map.
      */
     public Game() 
     {
+        jugador = new Player();
         createRooms();
-        parser = new Parser();
-        camino = new Stack<>();
-        contadorDeBack = 0;
+        parser = new Parser();      
+        
     }
 
     /**
@@ -74,10 +71,8 @@ public class Game
         control.addItem(new Item("Codigos", 0.05f));
         barracones.addItem(new Item("silenciador",0.5f));
 
-        currentRoom = entrada;  // start game outside
-         habitacionAnterior = null;
-         contadorDeBack = 0;
-
+        jugador.fijarHabitacion(entrada);  // start game outside
+       
     }
 
     /**
@@ -86,7 +81,7 @@ public class Game
     public void play() 
     {            
         printWelcome();
-
+        
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
 
@@ -108,7 +103,7 @@ public class Game
         System.out.println("Infiltrandose en la base es un juego impresionante");
         System.out.println("Escribe help si necesitas ayuda");
         System.out.println();
-        printLocationInfo();
+        jugador.printLocationInfo();
         System.out.println();
     }
 
@@ -132,26 +127,29 @@ public class Game
         }
         else if (commandWord.equals("go")) {
             Room lastRoom = currentRoom;
-            goRoom(command);
-            if(lastRoom != currentRoom){
-                camino.push(lastRoom);
-            }
-        }
+            jugador.goRoom(command);
+                   }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
         else if (commandWord.equals("look")) {
-            System.out.println(currentRoom.getLongDescription());
-
+            jugador.printLocationInfo();
         }
+        else if (commandWord.equals("take")) {
+            jugador.cogeObjeto(command.getSecondWord());
+        }
+        else if (commandWord.equals("drop")) {
+            jugador.tiraObjeto(command.getSecondWord());
+        }      
+        
         else if(commandWord.equals("eat"))
         {
             System.out.println("You have eaten now and you are not hungry any more");
         }
         else if (commandWord.equals("back")) {
-            atras();            
-            contadorDeBack = 0;
-            
+            jugador.atras();
+            jugador.printLocationInfo();
+                      
         }
 
         return wantToQuit;
@@ -172,35 +170,6 @@ public class Game
     }
 
     /** 
-     * Try to go in one direction. If there is an exit, enter
-     * the new room, otherwise print an error message.
-     */
-    private void goRoom(Command command) 
-    {
-        if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("Go where?");
-            return;
-        }
-
-        String direction = command.getSecondWord();
-
-        // Try to leave current room.
-        Room nextRoom = currentRoom.getExit(direction);
-
-        if (nextRoom == null) {
-            System.out.println("No hay puerta, intente ir en otra direccion");
-        }
-        else {
-            habitacionAnterior = currentRoom;
-            currentRoom = nextRoom;
-            printLocationInfo();
-            System.out.println();
-            contadorDeBack++;
-        }
-    }
-
-    /** 
      * "Quit" was entered. Check the rest of the command to see
      * whether we really quit the game.
      * @return true, if this command quits the game, false otherwise.
@@ -216,36 +185,7 @@ public class Game
         }
     }
 
-    /**
-     * 
-     * Metodo que muestra por pantalla la informacion de la localizacion
-     */
-    private void  printLocationInfo() 
-    {
-        System.out.println(currentRoom.getLongDescription());     
-    }
-
-    /**
-     * Metodo que vuelve a la habitacion anterior en la que estuvo el jugador
-     */
-    private void atras()
-    {              
-        
-        if(habitacionAnterior != null && contadorDeBack > 0)
-         {
-             Room nextRoom = habitacionAnterior;
-             habitacionAnterior = currentRoom;
-             currentRoom = nextRoom;
-             printLocationInfo();
-             System.out.println();
-             
-         }
-         else
-          {
-              System.out.println("Lo siento, no pueder continuar");              
-          }
-         
-      }
+    
     }
 
 
