@@ -3,14 +3,16 @@ public class Item
      // instance variables - replace the example below with your own
      private String descripcion;
      private float pesoKg;
+     private boolean permitido;
  
      /**
       * Constructor for objects of class Item
       */
-     public Item(String descripcion, float pesoKg)
+     public Item(String descripcion, float pesoKg, boolean permitido)
      {
          this.descripcion = descripcion;
          this.pesoKg = pesoKg;
+         this.permitido = permitido;
      }
  
      /**
@@ -26,4 +28,14 @@ public class Item
      public float getPesoKg(){
          return pesoKg;
      }
+     
+     /**
+      * Metodo que informa si se puede coger el objeto
+      */
+     public boolean infoCoger()
+     {
+         return permitido;
+     }
+     
+     
  }

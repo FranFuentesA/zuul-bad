@@ -87,13 +87,14 @@ public class Player
      */
     public void cogeObjeto(String descripcion){
         Item item = currentRoom.buscaObj(descripcion);
-        if(item != null && (pesoObjetos + item.getPesoKg()) < 50){
+        //50 es el peso maximo que puede llevar el jugador
+        if(item != null && (pesoObjetos + item.getPesoKg()) < 50 && item.infoCoger() == true){
             lObjetos.add(item);
             pesoObjetos += item.getPesoKg();
             currentRoom.elimnaObj(item);
         }
         else{
-            System.out.println("Buff, no puedo cargar esto porque es muy pesado");
+            System.out.println("Buff, no puedo coger esto");
         }
     }
 

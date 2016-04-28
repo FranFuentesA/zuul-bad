@@ -67,9 +67,14 @@ public class Game
 
         // Ponemos objetos en las salas
 
-        armeria.addItem(new Item("Pistola", 1.5f));
-        control.addItem(new Item("Codigos", 0.05f));
-        barracones.addItem(new Item("silenciador",0.5f));
+        armeria.addItem(new Item("Pistola", 1.5f,true));
+        armeria.addItem(new Item("Misil ATT",48f,false));
+        control.addItem(new Item("Codigos", 0.05f,true));
+        barracones.addItem(new Item("silenciador",0.5f,true));
+        barracones.addItem(new Item("Cama",20f,false));
+        oficinas.addItem(new Item("Silla de oficina",9f,false));
+        torre.addItem(new Item("foco",27f,false));
+        
 
         jugador.fijarHabitacion(entrada);  // start game outside
        
