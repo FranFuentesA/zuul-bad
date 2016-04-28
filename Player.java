@@ -13,19 +13,19 @@ public class Player
     private Room habitacionAnterior;
     private Game game;
     private ArrayList<Item> lObjetos;
-    private float carga;
-    private float pesoObjetos = 0;;
+    private float cargaMaxima;
+    private float pesoActual;
 
     /**
      * Constructor for objects of class Player
      */
-    public Player()
+    public Player(float cargaMaxima)
     {
         lObjetos = new ArrayList<>();
-        this.carga = carga;
+        this.cargaMaxima = cargaMaxima;
         this.currentRoom = currentRoom;
         camino = new Stack<>();
-        pesoObjetos = 0;
+        pesoActual = 0;
     }
 
     public void fijarHabitacion(Room habitacion){
@@ -87,10 +87,10 @@ public class Player
      */
     public void cogeObjeto(String descripcion){
         Item item = currentRoom.buscaObj(descripcion);
-        //50 es el peso maximo que puede llevar el jugador
-        if(item != null && (pesoObjetos + item.getPesoKg()) < 50 && item.infoCoger() == true){
+        
+        if(item != null && (pesoActual + item.getPesoKg()) < cargaMaxima && item.infoCoger() == true){
             lObjetos.add(item);
-            pesoObjetos += item.getPesoKg();
+            pesoActual += item.getPesoKg();
             currentRoom.elimnaObj(item);
         }
         else{
@@ -107,7 +107,7 @@ public class Player
         while(i < lObjetos.size() && !encontrado){
             if(lObjetos.get(i).getDescripcionObjeto().equals(descripcion)){
                 currentRoom.addItem(lObjetos.get(i));
-                carga -= lObjetos.get(i).getPesoKg();
+                pesoActual -= lObjetos.get(i).getPesoKg();
                 lObjetos.remove(lObjetos.get(i));
                 encontrado = true;
                 System.out.println("he tirado el objeto");
@@ -116,6 +116,21 @@ public class Player
         }
         if(!encontrado) {
             System.out.println("Tengo el inventario vacio");
+        }
+    }
+    
+    /**
+     * Metodo que muestra el inventario de objetos del jugador
+     */
+    public void inventario(){
+        if(lObjetos.size() != 0){
+            System.out.println("Inventario de objetos: ");
+            for (Item inventario : lObjetos) {
+                System.out.println(inventario.getDescripcionObjeto() + " Peso : " + inventario.getPesoKg() + " Kg");
+            }
+        }
+        else {
+            System.out.println("Tu inventario esta vacio.");
         }
     }
 }

@@ -26,10 +26,10 @@ public class Game
      */
     public Game() 
     {
-        jugador = new Player();
+        jugador = new Player(30);
         createRooms();
         parser = new Parser();      
-        
+
     }
 
     /**
@@ -67,26 +67,23 @@ public class Game
 
         // Ponemos objetos en las salas
 
-        armeria.addItem(new Item("Pistola", 1.5f,true));
-        armeria.addItem(new Item("Misil ATT",48f,false));
+        armeria.addItem(new Item("Pistola", 3.5f,true));
+        armeria.addItem(new Item("MisilATT",40f,true));
         control.addItem(new Item("Codigos", 0.05f,true));
         barracones.addItem(new Item("silenciador",0.5f,true));
         barracones.addItem(new Item("Cama",20f,false));
         oficinas.addItem(new Item("Silla de oficina",9f,false));
-        torre.addItem(new Item("foco",27f,false));
-        
+        torre.addItem(new Item("foco",27f,true));
 
         jugador.fijarHabitacion(entrada);  // start game outside
-       
     }
-
     /**
      *  Main play routine.  Loops until end of play.
      */
     public void play() 
     {            
         printWelcome();
-        
+
         // Enter the main command loop.  Here we repeatedly read commands and
         // execute them until the game is over.
 
@@ -133,7 +130,7 @@ public class Game
         else if (commandWord.equals("go")) {
             Room lastRoom = currentRoom;
             jugador.goRoom(command);
-                   }
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
@@ -145,8 +142,10 @@ public class Game
         }
         else if (commandWord.equals("drop")) {
             jugador.tiraObjeto(command.getSecondWord());
-        }      
-        
+        }    
+        else if (commandWord.equals("items")) {
+            jugador.inventario();
+        }
         else if(commandWord.equals("eat"))
         {
             System.out.println("You have eaten now and you are not hungry any more");
@@ -154,7 +153,7 @@ public class Game
         else if (commandWord.equals("back")) {
             jugador.atras();
             jugador.printLocationInfo();
-                      
+
         }
 
         return wantToQuit;
@@ -190,7 +189,5 @@ public class Game
         }
     }
 
-    
-    }
-
+}
 
