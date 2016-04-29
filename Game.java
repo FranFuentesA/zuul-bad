@@ -20,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Player jugador;
-    private Room currentRoom;
+    
     /**
      * Create the game and initialise its internal map.
      */
@@ -123,37 +123,35 @@ public class Game
             return false;
         }
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("help")) {
+        Option commandWord = command.getCommandWord();
+        if (commandWord.equals(Option.HELP)) {
             printHelp();
         }
-        else if (commandWord.equals("go")) {
-            Room lastRoom = currentRoom;
+        else if (commandWord.equals(Option.GO)) {
             jugador.goRoom(command);
         }
-        else if (commandWord.equals("quit")) {
+        else if (commandWord.equals(Option.QUIT)) {
             wantToQuit = quit(command);
         }
-        else if (commandWord.equals("look")) {
+        else if (commandWord.equals(Option.LOOK)) {
             jugador.printLocationInfo();
         }
-        else if (commandWord.equals("take")) {
+        else if (commandWord.equals(Option.TAKE)) {
             jugador.cogeObjeto(command.getSecondWord());
         }
-        else if (commandWord.equals("drop")) {
+        else if (commandWord.equals(Option.DROP)) {
             jugador.tiraObjeto(command.getSecondWord());
         }    
-        else if (commandWord.equals("items")) {
+        else if (commandWord.equals(Option.ITEMS)) {
             jugador.inventario();
         }
-        else if(commandWord.equals("eat"))
+        else if(commandWord.equals(Option.EAT))
         {
             System.out.println("You have eaten now and you are not hungry any more");
         }
-        else if (commandWord.equals("back")) {
+        else if (commandWord.equals(Option.BACK)) {
             jugador.atras();
             jugador.printLocationInfo();
-
         }
 
         return wantToQuit;
