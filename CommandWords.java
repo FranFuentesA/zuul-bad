@@ -21,7 +21,7 @@ public class CommandWords
         comandos = new HashMap<>();
         comandos.put("andare", Option.GO);
         comandos.put("smettere", Option.QUIT);
-        comandos.put("Aiuto", Option.HELP);
+        comandos.put("aiuto", Option.HELP);
         comandos.put("Guarda", Option.LOOK);
         comandos.put("mangiare", Option.EAT);
         comandos.put("indietro", Option.BACK);

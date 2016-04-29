@@ -103,7 +103,7 @@ public class Game
         System.out.println();
         System.out.println("Bienvenido a Infiltrandose en la base!");
         System.out.println("Infiltrandose en la base es un juego impresionante");
-        System.out.println("Escribe help si necesitas ayuda");
+        System.out.println("Escribe aiuto si necesitas ayuda");
         System.out.println();
         jugador.printLocationInfo();
         System.out.println();
