@@ -20,7 +20,7 @@ public class Game
 {
     private Parser parser;
     private Player jugador;
-    
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -77,6 +77,7 @@ public class Game
 
         jugador.fijarHabitacion(entrada);  // start game outside
     }
+
     /**
      *  Main play routine.  Loops until end of play.
      */
@@ -124,61 +125,62 @@ public class Game
         }
 
         Option commandWord = command.getCommandWord();
-        
-        if (commandWord.equals(Option.HELP)) {
+
+        switch(commandWord){
+            case HELP:
             printHelp();
+            break;
+            case GO:
+                jugador.goRoom(command);
+            break;
+            case QUIT:
+                wantToQuit = quit(command);
+            break;
+            case LOOK:
+                jugador.printLocationInfo();
+            break;            
+            case TAKE:
+                jugador.cogeObjeto(command.getSecondWord());
+            break;   
+            case DROP:
+                jugador.tiraObjeto(command.getSecondWord());
+            break;    
+            case ITEMS:
+                jugador.inventario();
+            break;
+            case EAT:            
+                System.out.println("You have eaten now and you are not hungry any more");
+            break;
+            case BACK:
+                jugador.atras();
+                jugador.printLocationInfo();
+            break;
+            }
+
+         return wantToQuit;
         }
-        else if (commandWord.equals(Option.GO)) {
-            jugador.goRoom(command);
-        }
-        else if (commandWord.equals(Option.QUIT)) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord.equals(Option.LOOK)) {
-            jugador.printLocationInfo();
-        }
-        else if (commandWord.equals(Option.TAKE)) {
-            jugador.cogeObjeto(command.getSecondWord());
-        }
-        else if (commandWord.equals(Option.DROP)) {
-            jugador.tiraObjeto(command.getSecondWord());
-        }    
-        else if (commandWord.equals(Option.ITEMS)) {
-            jugador.inventario();
-        }
-        else if(commandWord.equals(Option.EAT))
+
+        // implementations of user commands:
+
+        /**
+         * Print out some help information.
+         * Here we print some stupid, cryptic message and a list of the 
+         * command words.
+         */
+        private void printHelp() 
         {
-            System.out.println("You have eaten now and you are not hungry any more");
-        }
-        else if (commandWord.equals(Option.BACK)) {
-            jugador.atras();
-            jugador.printLocationInfo();
+            System.out.println("Eres un espia, busca la sala de codigos");
+            System.out.println();
+            parser.imprimirComados();
         }
 
-        return wantToQuit;
-    }
-
-    // implementations of user commands:
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
-     * command words.
-     */
-    private void printHelp() 
-    {
-        System.out.println("Eres un espia, busca la sala de codigos");
-        System.out.println();
-        parser.imprimirComados();
-    }
-
-    /** 
-     * "Quit" was entered. Check the rest of the command to see
-     * whether we really quit the game.
-     * @return true, if this command quits the game, false otherwise.
-     */
-    private boolean quit(Command command) 
-    {
+        /** 
+         * "Quit" was entered. Check the rest of the command to see
+         * whether we really quit the game.
+         * @return true, if this command quits the game, false otherwise.
+         */
+        private boolean quit(Command command) 
+        {
         if(command.hasSecondWord()) {
             System.out.println("Quit what?");
             return false;
