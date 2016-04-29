@@ -124,6 +124,7 @@ public class Game
         }
 
         Option commandWord = command.getCommandWord();
+        
         if (commandWord.equals(Option.HELP)) {
             printHelp();
         }
