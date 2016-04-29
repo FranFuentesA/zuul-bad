@@ -10,12 +10,9 @@ public class Player
 {
     private Room currentRoom;
     private Stack<Room> camino;
-    private Room habitacionAnterior;
-    private Game game;
     private ArrayList<Item> lObjetos;
     private float cargaMaxima;
     private float pesoActual;
-
     /**
      * Constructor for objects of class Player
      */

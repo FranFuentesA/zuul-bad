@@ -18,12 +18,6 @@ import java.util.ArrayList;
 public class Room 
 {
     private String description;
-    private Room northExit;
-    private Room southExit;
-    private Room eastExit;
-    private Room westExit;
-    private Room surEsteExit;
-    private Room noroEsteExit;
     private HashMap<String, Room> salas;
     private ArrayList<Item> objetos;
    
