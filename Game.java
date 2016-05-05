@@ -91,8 +91,10 @@ public class Game
         // game
 
         while (! finished) {
-            if(jugador.getPuntos() == 0)
-            {
+            if (jugador.codigosEncontrados()) {
+                finished = true;
+                System.out.println("Has encontrado los codigos, Juego completado");  
+            } else if (jugador.getPuntos() == 0) {
                 finished = true;
                 System.out.println("Tus puntos han llegado a 0, la mision a finalizado");            
             } else {

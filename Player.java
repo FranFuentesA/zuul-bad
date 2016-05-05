@@ -26,13 +26,12 @@ public class Player
         pesoActual = 0;
         puntosIncognito = 40;
     }
-    
+
     public Room getCurrentRoom() {
-    
-    return currentRoom;
+
+        return currentRoom;
     }
-    
-    
+
     public void fijarHabitacion(Room habitacion){
         if(currentRoom != null){
             camino.push(currentRoom);
@@ -51,14 +50,14 @@ public class Player
      * Resta los puntos del jugador
      */
     public int restarPuntosObj(){
-         return puntosIncognito = puntosIncognito - 10;
+        return puntosIncognito = puntosIncognito - 10;
     }
-    
+
     /**
      * Resta los puntos del jugador
      */
     public int restarPuntosAla(){
-         return puntosIncognito = puntosIncognito - 20;
+        return puntosIncognito = puntosIncognito - 20;
     }
 
     /** 
@@ -156,10 +155,25 @@ public class Player
             System.out.println("Inventario de objetos: ");
             for (Item inventario : lObjetos) {
                 System.out.println(inventario.getDescripcionObjeto() + " Peso : " + inventario.getPesoKg() + " Kg");
-            }
+            }            
         }
         else {
             System.out.println("Tu inventario esta vacio.");
         }
+    }
+
+    /**
+     * Metodo que busca si tenemos en nustro poder los codigos
+     */
+    public boolean codigosEncontrados() {
+      
+        boolean encontrado = false;
+        for (Item inventario : lObjetos) {
+            if (inventario.getDescripcionObjeto().equals("Codigos")) {
+                encontrado = true;    
+            }
+        }     
+
+        return encontrado;
     }
 }
