@@ -29,6 +29,7 @@ public class CommandWords
         comandos.put(Option.ITEMS.getComando(), Option.ITEMS);
         comandos.put(Option.DROP.getComando(), Option.DROP);
         comandos.put(Option.UNKNOWN.getComando(), Option.UNKNOWN);
+        comandos.put(Option.POINTS.getComando(), Option.POINTS);
     }
 
     /**

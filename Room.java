@@ -20,7 +20,7 @@ public class Room
     private String description;
     private HashMap<String, Room> salas;
     private ArrayList<Item> objetos;
-   
+    private boolean trampaLaser;
 
     /**
      * Create a room described "description". Initially, it has
@@ -28,11 +28,19 @@ public class Room
      * "an open court yard".
      * @param description The room's description.
      */
-    public Room(String description) 
+    public Room(String description,boolean trampaLaser) 
     {
         this.description = description;
+        this.trampaLaser = trampaLaser;
         salas = new HashMap<>();  
-        objetos = new ArrayList<>();
+        objetos = new ArrayList<>();        
+    }
+
+    /**
+     * Metodo que muestra si la alarma esta creada.
+     */
+    public boolean alarmaOn() {
+        return trampaLaser;
     }
 
     /**
@@ -86,56 +94,60 @@ public class Room
     public String getLongDescription()
     {
         String devolver = "";
-        devolver = "Estas en " + getDescription() + " "+ getExitString();
+        if (alarmaOn()){
+            devolver = "Estas en " + getDescription() + " "+ getExitString() + "Alarma Activada";           
+        } else {            
+            devolver = "Estas en " + getDescription() + " "+ getExitString();
+        }
         if(objetos.size()== 0){
-              devolver += "No puedo ver ningun objeto util en la sala";
-         }
-         else{
-              devolver += "En la sala hay: ";
-             for(Item lObjetos : objetos){
-                 devolver += "\n" + lObjetos.getDescripcionObjeto() + " Peso: " + lObjetos.getPesoKg();
-             }
-         }
-         return devolver;
+            devolver += "No puedo ver ningun objeto util en la sala";
+        }
+        else{
+            devolver += "En la sala hay: ";
+            for(Item lObjetos : objetos){
+                devolver += "\n" + lObjetos.getDescripcionObjeto() + " Peso: " + lObjetos.getPesoKg();
+            }
+        }
+        return devolver;
     }
-     /**
-      * Metodo que añade objetos a las salas
-      */
-     public void addItem(Item objeto){
-         objetos.add(objeto);
-     }
-             
-     /**
-      * Metodo que busca los objetos en la habitacion
+
+    /**
+     * Metodo que añade objetos a las salas
      */
-     public Item buscaObj(String descripcion){
+    public void addItem(Item objeto){
+        objetos.add(objeto);
+    }
+
+    /**
+     * Metodo que busca los objetos en la habitacion
+     */
+    public Item buscaObj(String descripcion){
         int i = 0;
         boolean encontrado = false;
         Item item = null;
         while(i < objetos.size() && !encontrado){
             if(objetos.get(i).getDescripcionObjeto().equals(descripcion)){
-                 item = objetos.get(i);
-                 encontrado = true;
+                item = objetos.get(i);
+                encontrado = true;
             }
-             i++;
-         }
-         return item;
-     }
-    
-     /**
-      * Meotodo que elimina un objeto cuando lo coge un jugador
-      */
+            i++;
+        }
+        return item;
+    }
+
+    /**
+     * Meotodo que elimina un objeto cuando lo coge un jugador
+     */
     public void elimnaObj(Item item){
-         int i = 0;
-         boolean encontrado = false;
-         while(i < objetos.size() && !encontrado){
+        int i = 0;
+        boolean encontrado = false;
+        while(i < objetos.size() && !encontrado){
             if(objetos.get(i).getDescripcionObjeto().equals(item.getDescripcionObjeto())){
-                 objetos.remove(objetos.get(i));
-                 encontrado = true;
+                objetos.remove(objetos.get(i));
+                encontrado = true;
             }
-             i++;
-         }
+            i++;
+        }
     }
 }
-    
 

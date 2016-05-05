@@ -12,7 +12,8 @@ public class Player
     private Stack<Room> camino;
     private ArrayList<Item> lObjetos;
     private float cargaMaxima;
-    private float pesoActual;
+    private float pesoActual;  
+    private int puntosIncognito;
     /**
      * Constructor for objects of class Player
      */
@@ -23,13 +24,41 @@ public class Player
         this.currentRoom = currentRoom;
         camino = new Stack<>();
         pesoActual = 0;
+        puntosIncognito = 40;
     }
-
+    
+    public Room getCurrentRoom() {
+    
+    return currentRoom;
+    }
+    
+    
     public void fijarHabitacion(Room habitacion){
         if(currentRoom != null){
             camino.push(currentRoom);
         }
         currentRoom = habitacion;
+    }
+
+    /**
+     * Metodo que devuelve los puntos del jugador
+     */
+    public int getPuntos() {
+        return puntosIncognito;
+    }
+
+    /**
+     * Resta los puntos del jugador
+     */
+    public int restarPuntosObj(){
+         return puntosIncognito = puntosIncognito - 10;
+    }
+    
+    /**
+     * Resta los puntos del jugador
+     */
+    public int restarPuntosAla(){
+         return puntosIncognito = puntosIncognito - 20;
     }
 
     /** 
@@ -56,6 +85,9 @@ public class Player
             camino.push(currentRoom);
             currentRoom = nextRoom;
             System.out.println(currentRoom.getLongDescription());  
+            if (getCurrentRoom().alarmaOn()) {
+                restarPuntosAla();                            
+            }
             System.out.println();            
         }
     }
@@ -84,7 +116,7 @@ public class Player
      */
     public void cogeObjeto(String descripcion){
         Item item = currentRoom.buscaObj(descripcion);
-        
+
         if(item != null && (pesoActual + item.getPesoKg()) < cargaMaxima && item.infoCoger() == true){
             lObjetos.add(item);
             pesoActual += item.getPesoKg();
@@ -115,7 +147,7 @@ public class Player
             System.out.println("Tengo el inventario vacio");
         }
     }
-    
+
     /**
      * Metodo que muestra el inventario de objetos del jugador
      */
