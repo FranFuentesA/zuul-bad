@@ -7,7 +7,7 @@
  */
 public enum Option
 {
-    GO("ir"),QUIT("quitar"), HELP("ayuda"), LOOK("buscar"),EAT("comer"),BACK("atras"), TAKE("coger"), ITEMS("bolsa"), DROP("tirar"), UNKNOWN(" ");
+    GO("ir"),QUIT("quitar"), HELP("ayuda"), LOOK("buscar"),EAT("comer"),BACK("atras"), TAKE("coger"), ITEMS("bolsa"), DROP("tirar"), UNKNOWN(" "),POINTS("Puntos");
     
     private String comando;
     private Option(String comando) {

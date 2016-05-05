@@ -3,7 +3,7 @@ public class Item
      // instance variables - replace the example below with your own
      private String descripcion;
      private float pesoKg;
-     private boolean permitido;
+     public boolean permitido;
  
      /**
       * Constructor for objects of class Item
